@@ -33,7 +33,25 @@ def input_pdf_setup(uploaded_file):
 
 ## Streamlit App
 
-st.set_page_config(page_title="Garuda ATS Resume EXpert")
+st.set_page_config(page_title="Garuda ATS Resume EXpert",layout="wide")
+custom_html = """
+<div class="banner">
+    <img src="garuda.jpg" alt="Banner Image">
+</div>
+<style>
+    .banner {
+        width: 160%;
+        height: 200px;
+        overflow: hidden;
+    }
+    .banner img {
+        width: 100%;
+        object-fit: cover;
+    }
+</style>
+"""
+# Display the custom HTML
+st.components.v1.html(custom_html)
 st.header("Garuda ATS Tracking System")
 input_text=st.text_area("Job Description: ",key="input")
 uploaded_file=st.file_uploader("Upload your resume(PDF)...",type=["pdf"])
