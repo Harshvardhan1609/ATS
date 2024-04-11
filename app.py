@@ -5,8 +5,8 @@ import streamlit as st
 import google.generativeai as genai
 import PyPDF2
 
+# genai.configure(api_key=st.secrets["GOOGLE_API"])
 genai.configure(api_key=st.secrets["GOOGLE_API"])
-# 
 
 
 def get_gemini_response(input,prompt):
@@ -119,6 +119,30 @@ elif page_selection == "Garuda Conversation":
             st.write(response)
         else:
             st.write("Please upload the resume")
+    if uploaded_file is not None:
+        st.sidebar.write("PDF Uploaded Successfully")
+
+        # Download button
+        download_button = st.sidebar.button("Download Response")
+
+        if download_button:
+            # Create a PDF file writer object
+            pdf_writer = PyPDF2.PdfWriter()
+
+            # Add the response text to the PDF
+            pdf_writer.add_page()
+            pdf_writer.set_font("Arial", size=12)
+            pdf_writer.cell(0, 10, response, ln=True)
+
+            # Save the PDF file
+            with open("response.pdf", "wb") as f:
+                pdf_writer.write(f)
+
+            # Provide download link
+            st.sidebar.markdown(
+                f'<a href="response.pdf" download>Click here to download the response</a>',
+                unsafe_allow_html=True
+            )
 
 if uploaded_file is not None:
     st.sidebar.write("PDF Uploaded Successfully")
