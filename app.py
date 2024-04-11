@@ -34,6 +34,7 @@ def input_pdf_setup(uploaded_file):
 ## Streamlit App
 
 st.set_page_config(page_title="Garuda ATS Resume EXpert")
+st.image("garuda.jpg", caption="Garuda", use_column_width=True)
 st.header("Garuda ATS Tracking System")
 input_text=st.text_area("Job Description: ",key="input")
 uploaded_file=st.file_uploader("Upload your resume(PDF)...",type=["pdf"])
@@ -41,11 +42,13 @@ uploaded_file=st.file_uploader("Upload your resume(PDF)...",type=["pdf"])
 if uploaded_file is not None:
     st.write("PDF Uploaded Successfully")
 
-st.sidebar.image("garuda.jpg", use_column_width=True)
-submit1 = st.sidebar.button("Tell Me About the Resume")
-submit2 = st.sidebar.button("Give Suggestions for Improvements")
-submit3 = st.sidebar.button("Percentage match")
 
+submit1 = st.button("Tell Me About the Resume")
+submit2 = st.button("Give Suggestions for Improvements")
+
+#submit2 = st.button("How Can I Improvise my Skills")
+
+submit3 = st.button("Percentage match")
 
 input_prompt1 = """
  You are an experienced Technical Human Resource Manager,your task is to review the provided resume against the job description. 
