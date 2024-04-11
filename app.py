@@ -43,13 +43,14 @@ if uploaded_file is not None:
     st.write("PDF Uploaded Successfully")
 
 
-
-submit1 = st.button("Tell Me About the Resume")
-submit2 = st.button("Give Suggestions for Improvements")
-
-#submit2 = st.button("How Can I Improvise my Skills")
-
-submit3 = st.button("Percentage match")
+st.write("### Actions:")
+col1, col2, col3 = st.beta_columns(3)
+with col1:
+    submit1 = st.button("Tell Me About the Resume")
+with col2:
+    submit2 = st.button("Give Suggestions for Improvements")
+with col3:
+    submit3 = st.button("Percentage match")
 
 input_prompt1 = """
  You are an experienced Technical Human Resource Manager,your task is to review the provided resume against the job description. 
