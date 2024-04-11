@@ -33,8 +33,8 @@ def input_pdf_setup(uploaded_file):
 
 ## Streamlit App
 
-st.set_page_config(page_title="ATS Resume EXpert")
-st.header("ATS Tracking System")
+st.set_page_config(page_title="Garuda ATS Resume EXpert")
+st.header("Garuda ATS Tracking System")
 input_text=st.text_area("Job Description: ",key="input")
 uploaded_file=st.file_uploader("Upload your resume(PDF)...",type=["pdf"])
 
@@ -51,7 +51,7 @@ submit3 = st.button("Percentage match")
 input_prompt1 = """
  You are an experienced Technical Human Resource Manager,your task is to review the provided resume against the job description. 
   Please share your professional evaluation on whether the candidate's profile aligns with the role. 
- Highlight the strengths and weaknesses of the applicant in relation to the specified job requirements job Description is in summerized bullet points:-:.
+ Highlight the strengths and weaknesses of the applicant in relation to the specified job requirements job Description is:-:.
 """
 
 input_prompt3 = """
