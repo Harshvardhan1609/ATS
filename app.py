@@ -43,7 +43,7 @@ if uploaded_file is not None:
     st.write("PDF Uploaded Successfully")
 
 
-col1, col2, col3 = st.beta_columns(3)
+col1, col2, col3 = st.columns(3)
 
 with col1:
     submit1 = st.button("Tell Me About the Resume")
