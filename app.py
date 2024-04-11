@@ -5,7 +5,7 @@ import streamlit as st
 import google.generativeai as genai
 import PyPDF2
 
-genai.configure(api_key=os.getenv("GOOGLE_API"))
+genai.configure(api_key=st.secrets["GOOGLE_API"])
 
 
 def get_gemini_response(input,prompt):
