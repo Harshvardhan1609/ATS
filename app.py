@@ -6,8 +6,6 @@ import google.generativeai as genai
 import PyPDF2
 
 genai.configure(api_key=st.secrets["GOOGLE_API"])
-
-st.set_page_config(layout="wide")
 # Custom HTML/CSS for the banner
 custom_html = """
 <div class="banner">
