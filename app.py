@@ -24,7 +24,7 @@ custom_html = """
 </style>
 """
 # Display the custom HTML
-st.components.v1.html(custom_html)
+
 
 
 def get_gemini_response(input,prompt):
@@ -53,6 +53,7 @@ def input_pdf_setup(uploaded_file):
 ## Streamlit App
 
 st.set_page_config(page_title="Garuda ATS Resume EXpert")
+st.components.v1.html(custom_html)
 st.header("Garuda ATS Tracking System")
 input_text=st.text_area("Job Description: ",key="input")
 uploaded_file=st.file_uploader("Upload your resume(PDF)...",type=["pdf"])
