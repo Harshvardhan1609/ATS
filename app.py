@@ -46,10 +46,10 @@ if uploaded_file is not None:
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    submit1 = st.button("Tell Me About the Resume")
+    submit1 = st.button("Resume Summary")
 
 with col2:
-    submit2 = st.button("Give Suggestions for Improvements")
+    submit2 = st.button("Improvements Suggestions")
 
 with col3:
     submit3 = st.button("Percentage match")
