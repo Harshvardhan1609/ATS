@@ -43,6 +43,7 @@ if uploaded_file is not None:
 
 
 submit1 = st.button("Tell Me About the Resume")
+submit2 = st.button("Give Suggestions for Improvements")
 
 #submit2 = st.button("How Can I Improvise my Skills")
 
@@ -60,6 +61,10 @@ your task is to evaluate the resume against the provided job description. give m
 the job description. First the output should come as percentage and then keywords missing and last final thoughts job Description is:-:.
 """
 
+input_prompt2 = """
+You are a highly experienced career consultant with expertise in resume evaluation and job matching. Your task is to provide feedback and improvement tips based on the weaknesses identified in the resume, aligning it with the job description. Please share your professional evaluation and suggestions for improvement. Job improvements is:-:.
+"""
+
 if submit1:
     if uploaded_file is not None:
         pdf_content=input_pdf_setup(uploaded_file)
@@ -68,6 +73,16 @@ if submit1:
         st.write(response)
     else:
         st.write("Please upload the resume")
+
+elif submit2:
+    if uploaded_file is not None:
+        pdf_content=input_pdf_setup(uploaded_file)
+        response=get_gemini_response(input_prompt2+input_text,pdf_content)
+        st.subheader("The Repsonse is")
+        st.write(response)
+    else:
+        st.write("Please upload the resume")
+
 
 elif submit3:
     if uploaded_file is not None:
