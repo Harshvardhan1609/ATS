@@ -9,7 +9,7 @@ from PIL import Image
 import pdf2image
 import google.generativeai as genai
 
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+genai.configure(api_key=os.getenv("GOOGLE_API"))
 
 def get_gemini_response(input,pdf_cotent,prompt):
     model=genai.GenerativeModel('gemini-pro-vision')
@@ -40,8 +40,8 @@ def input_pdf_setup(uploaded_file):
 
 ## Streamlit App
 
-st.set_page_config(page_title="ATS Resume EXpert")
-st.header("ATS Tracking System")
+st.set_page_config(page_title="GARUDA")
+st.header("GARUDA Tracking System")
 input_text=st.text_area("Job Description: ",key="input")
 uploaded_file=st.file_uploader("Upload your resume(PDF)...",type=["pdf"])
 
@@ -75,7 +75,7 @@ if submit1:
         st.subheader("The Repsonse is")
         st.write(response)
     else:
-        st.write("Please uploa.d the resume")
+        st.write("Please uplaod the resume")
 
 elif submit3:
     if uploaded_file is not None:
@@ -84,4 +84,4 @@ elif submit3:
         st.subheader("The Repsonse is")
         st.write(response)
     else:
-        st.write("Please upload the resume")
+        st.write("Please uplaod the resume")
