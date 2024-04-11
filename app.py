@@ -7,6 +7,27 @@ import PyPDF2
 
 genai.configure(api_key=st.secrets["GOOGLE_API"])
 
+st.set_page_config(layout="wide")
+# Custom HTML/CSS for the banner
+custom_html = """
+<div class="banner">
+    <img src="garuda.jpg" alt="Banner Image">
+</div>
+<style>
+    .banner {
+        width: 160%;
+        height: 200px;
+        overflow: hidden;
+    }
+    .banner img {
+        width: 100%;
+        object-fit: cover;
+    }
+</style>
+"""
+# Display the custom HTML
+st.components.v1.html(custom_html)
+
 
 def get_gemini_response(input,prompt):
     model=genai.GenerativeModel('gemini-pro')
