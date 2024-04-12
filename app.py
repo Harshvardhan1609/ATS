@@ -161,12 +161,12 @@ elif  page_selection == "UGC Mapping":
                     page = ugc_pdf_reader.pages[page_num]
                     ugc_text += page.extract_text()
             
-            input_prompt4 = "You are expert of university grant commission of India and I am giving you all the ugc text "
+            input_prompt4 = "You are an best HR Resume checker with aligned job profile can you please give me percentage match of job title with the norms mentioned in the rules and regulation of ugc and job title is and give response in tabular format mentioning percentage match , strengths , weaknesses and missing experience and we are also adding ugc rules and regulation from which you have to match the profile and do not give any thing extra give information only according to the information mentioned in this prompt and also give relevent information for the post metioned  : "
             
             # Generate response using Gemini
             submit6 = st.button("MAP")
             if submit6:
-                    response = get_gemini_response(input_prompt4 + ugc_text + "Also I am providing you with the job to search in the text document and job title which you want to search in UGC norms is " +input_text, pdf_content)
+                    response = get_gemini_response(input_prompt4 +input_text + ugc_text, pdf_content)
                     st.subheader("HR Response")
                     st.write(response)
                     with open("response.txt", "w") as file:
