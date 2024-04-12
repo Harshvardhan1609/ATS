@@ -173,6 +173,31 @@ elif  page_selection == "UGC Mapping":
 
         else:
             st.write("Please upload the resume")
+elif page_selection=="Generate Questions(Garud GenZ)":
+
+    st.image("interview.jpg", use_column_width=True)
+    st.title("Enter the job role and find Interview Questions about it")
+    input_job=st.text_area("Job profile:-:" ,key="input")
+    hardness=st.radio("Difficulty Level:-:",("Low","Medium","Hard"))
+    gen_bt=st.button("Generate")
+    if gen_bt==True:
+        if hardness=="Low":
+            prompts=f"""According to the job role:-{input_job} Generate interview question which we can ask to the applicant with answers
+            """
+            res_gemini=get_gemini_response(input=prompts,prompt=f"Hardness of the questions will be:-:{hardness}")
+            st.write(res_gemini)
+        if hardness=="Medium":
+            prompts=f"""According to the job role:-{input_job} Generate interview question which we can ask to the applicant with an overview and in a broad way plz check how the applicant
+            would perform in real world 
+            """
+            res_gemini=get_gemini_response(input=prompts,prompt=f"Hardness of the questions will be:-:{hardness}")
+            st.write(res_gemini)
+        if hardness=="Hard":
+            prompts=f"""According to the job role:-{input_job} Generate interview question which we can ask to the applicant make sure to 
+            check the analytical knowledge and deep dive into the domain also included some cutting edge techniques of the interviewer also mention answers for that questions
+            """
+            res_gemini=get_gemini_response(input=prompts,prompt=f"Hardness of the questions will be:-:{hardness}")
+            st.write(res_gemini)
 
 if uploaded_file is None:
     st.sidebar.write("Please upload Resume")
