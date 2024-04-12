@@ -61,7 +61,7 @@ current_page = 1
 # Sidebar navigation
 st.sidebar.image("garudaaihr.png",use_column_width=True)
 st.sidebar.title("GRADUDA AI")
-page_selection = st.sidebar.radio("Go to", ("Garuda ATS Tracking System", "Garuda Conversation","UGC Mapping","Generate Questions(Garud GenZ)"))
+page_selection = st.sidebar.radio("Go to", ("Garuda ATS Tracking System", "Garuda Conversation","UGC Mapping","Garuda Genz Interview"))
 uploaded_file = st.sidebar.file_uploader("Upload your resume(PDF)...",type=["pdf"], accept_multiple_files=True)
 # Page 1: Garuda ATS Tracking System
 if page_selection == "Garuda ATS Tracking System":
@@ -173,7 +173,7 @@ elif  page_selection == "UGC Mapping":
 
         else:
             st.write("Please upload the resume")
-elif page_selection=="Generate Questions(Garud GenZ)":
+elif page_selection=="Garuda Genz Interview":
 
     st.image("interview.jpg", use_column_width=True)
     st.title("Garuda GenZ Interview")
