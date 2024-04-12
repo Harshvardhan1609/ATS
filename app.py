@@ -176,9 +176,9 @@ elif  page_selection == "UGC Mapping":
 elif page_selection=="Generate Questions(Garud GenZ)":
 
     st.image("interview.jpg", use_column_width=True)
-    st.title("Enter the job role and find Interview Questions about it")
-    input_job=st.text_area("Job profile:-:" ,key="input")
-    hardness=st.radio("Difficulty Level:-:",("Low","Medium","Hard"))
+    st.title("Garuda GenZ Interview")
+    input_job=st.text_area("Job profile:" ,key="input")
+    hardness=st.radio("Difficulty Level",("Low","Medium","Hard"))
     gen_bt=st.button("Generate")
     if gen_bt==True:
         if hardness=="Low":
