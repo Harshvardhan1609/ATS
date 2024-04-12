@@ -6,7 +6,6 @@ import google.generativeai as genai
 import PyPDF2
 
 genai.configure(api_key=st.secrets["GOOGLE_API"])
-# genai.configure(api_key="AIzaSyDSh_57xr9CeI2ZuTzHhzda-bRqDZm2N4k")
 
 
 def get_gemini_response(input,prompt):
@@ -140,8 +139,6 @@ elif page_selection == "Garuda Conversation":
                 download_button = st.download_button("Download Response",a,file_name="HRResponse.txt")
         else:
             st.write("Please upload the resume")
-    if uploaded_file is not None:
-        st.sidebar.write("PDF Uploaded Successfully")
 
 elif  page_selection == "UGC Mapping":
         st.image("groups.jpg", use_column_width=True)
