@@ -174,7 +174,7 @@ elif  page_selection == "UGC Mapping":
         else:
             st.write("Please upload the resume")
 
-if uploaded_file is not None:
+if uploaded_file is None:
     st.sidebar.write("Please upload Resume")
 
 
