@@ -6,6 +6,7 @@ import google.generativeai as genai
 import PyPDF2
 
 genai.configure(api_key=st.secrets["GOOGLE_API"])
+# genai.configure(api_key="AIzaSyDSh_57xr9CeI2ZuTzHhzda-bRqDZm2N4k")
 
 
 
@@ -83,6 +84,10 @@ if page_selection == "Garuda ATS Tracking System":
             response=get_gemini_response(input_prompt1+input_text,pdf_content)
             st.subheader("The Repsonse is")
             st.write(response)
+            with open("response.txt", "w") as file:
+                file.write(response)
+                a = response
+                download_button = st.download_button("Download Response",a,file_name="HRResponse.txt")
         else:
             st.write("Please upload the resume")
 
@@ -92,6 +97,10 @@ if page_selection == "Garuda ATS Tracking System":
             response=get_gemini_response(input_prompt2+input_text,pdf_content)
             st.subheader("The Repsonse is")
             st.write(response)
+            with open("response.txt", "w") as file:
+                file.write(response)
+                a = response
+                download_button = st.download_button("Download Response",a,file_name="HRResponse.txt")
         else:
             st.write("Please upload the resume")
 
@@ -102,6 +111,10 @@ if page_selection == "Garuda ATS Tracking System":
             response=get_gemini_response(input_prompt3+input_text,pdf_content)
             st.subheader("The Repsonse is")
             st.write(response)
+            with open("response.txt", "w") as file:
+                file.write(response)
+                a = response
+                download_button = st.download_button("Download Response",a,file_name="HRResponse.txt")
         else:
             st.write("Please upload the resume")
 
@@ -114,38 +127,25 @@ elif page_selection == "Garuda Conversation":
     ip6 = "in the mentioned document and do not give any extra information give only those information which is mentioned in content as it is highly confidential information so only relevent information should be given"
     input_prompt4 = st.text_area("")
     submit4 = st.button("Search in Resume")
+    response=""
+    a=""
     if submit4:
         if uploaded_file is not None:
             pdf_content=input_pdf_setup(uploaded_file)
             response=get_gemini_response(ip4+input_prompt4+ip6,pdf_content)
             st.subheader("The Repsonse is")
             st.write(response)
+            with open("response.txt", "w") as file:
+                file.write(response)
+                a = response
+                download_button = st.download_button("Download Response",a,file_name="Response.txt")
+
         else:
             st.write("Please upload the resume")
+    
     if uploaded_file is not None:
         st.sidebar.write("PDF Uploaded Successfully")
-
         # Download button
-        download_button = st.sidebar.button("Download Response")
-
-        if download_button:
-            # Create a PDF file writer object
-            pdf_writer = PyPDF2.PdfWriter()
-
-            # Add the response text to the PDF
-            pdf_writer.add_page()
-            pdf_writer.set_font("Arial", size=12)
-            pdf_writer.cell(0, 10, response, ln=True)
-
-            # Save the PDF file
-            with open("response.pdf", "wb") as f:
-                pdf_writer.write(f)
-
-            # Provide download link
-            st.sidebar.markdown(
-                f'<a href="response.pdf" download>Click here to download the response</a>',
-                unsafe_allow_html=True
-            )
 
 elif  page_selection == "UGC Mapping":
         st.image("groups.jpg", use_column_width=True)
@@ -164,7 +164,7 @@ elif  page_selection == "UGC Mapping":
                     page = ugc_pdf_reader.pages[page_num]
                     ugc_text += page.extract_text()
             
-            input_prompt4 = "You are an best HR Resume checker with aligned job profile can you please give me percentage match of job title with the norms mentioned in the rules and regulation of ugc and job title is and give response in tabular format mentioning percentage match , strengths , weaknesses and missing experience and we are also adding ugc rules and regulation from which you have to match the profile : "
+            input_prompt4 = "You are an best HR Resume checker with aligned job profile can you please give me percentage match of job title with the norms mentioned in the rules and regulation of ugc and job title is and give response in tabular format mentioning percentage match , strengths , weaknesses and missing experience and we are also adding ugc rules and regulation from which you have to match the profile and do not give any thing extra give information only according to the information mentioned in this prompt and also give relevent information for the post metioned  : "
             
             # Generate response using Gemini
             submit6 = st.button("MAP")
@@ -172,6 +172,10 @@ elif  page_selection == "UGC Mapping":
                     response = get_gemini_response(input_prompt4 +input_text + ugc_text, pdf_content)
                     st.subheader("HR Response")
                     st.write(response)
+                    with open("response.txt", "w") as file:
+                        file.write(response)
+                        a = response
+                        download_button = st.download_button("Download Response",a,file_name="HRResponse.txt")
             
 
         else:
