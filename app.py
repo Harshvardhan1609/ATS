@@ -5,8 +5,8 @@ import streamlit as st
 import google.generativeai as genai
 import PyPDF2
 
-# genai.configure(api_key=st.secrets["GOOGLE_API"])
 genai.configure(api_key=st.secrets["GOOGLE_API"])
+# genai.configure(api_key="AIzaSyDSh_57xr9CeI2ZuTzHhzda-bRqDZm2N4k")
 
 
 def get_gemini_response(input,prompt):
@@ -56,7 +56,7 @@ current_page = 1
 
 # Sidebar navigation
 st.sidebar.title("Navigation")
-page_selection = st.sidebar.radio("Go to", ("Garuda ATS Tracking System", "Garuda Conversation"))
+page_selection = st.sidebar.radio("Go to", ("Garuda ATS Tracking System", "Garuda Conversation","UGC Mapping"))
 uploaded_file = st.sidebar.file_uploader("Upload your resume(PDF)...",type=["pdf"])
 
 # Page 1: Garuda ATS Tracking System
@@ -143,6 +143,34 @@ elif page_selection == "Garuda Conversation":
                 f'<a href="response.pdf" download>Click here to download the response</a>',
                 unsafe_allow_html=True
             )
+
+elif  page_selection == "UGC Mapping":
+        st.image("garuda.jpg", use_column_width=True)
+        st.title("NORMS Matching System")
+        input_text = st.text_area("Job Title: ", key="input")
+        
+        if uploaded_file is not None:
+            pdf_content = input_pdf_setup(uploaded_file)
+            
+            # Read the UGC PDF file
+            ugc_pdf_path = "ugc.pdf"  # Replace with the actual path to the UGC PDF file
+            ugc_text = ""
+            with open(ugc_pdf_path, "rb") as ugc_file:
+                ugc_pdf_reader = PyPDF2.PdfReader(ugc_file)
+                for page_num in range(len(ugc_pdf_reader.pages)):
+                    page = ugc_pdf_reader.pages[page_num]
+                    ugc_text += page.extract_text()
+            
+            input_prompt4 = "You are an best HR Resume checker with aligned job profile can you please give me percentage match of job title with the norms mentioned in the rules and regulation of ugc and job title is and give response in tabular format mentioning percentage match , strengths , weaknesses and missing experience and we are also adding ugc rules and regulation from which you have to match the profile : "
+            
+            # Generate response using Gemini
+            response = get_gemini_response(input_prompt4 +input_text + ugc_text, pdf_content)
+            st.subheader("HR Response")
+            st.write(response)
+            
+        else:
+            st.write("Please upload the resume")
+
 
 if uploaded_file is not None:
     st.sidebar.write("PDF Uploaded Successfully")
