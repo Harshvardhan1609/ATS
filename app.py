@@ -9,46 +9,50 @@ genai.configure(api_key=st.secrets["GOOGLE_API"])
 # genai.configure(api_key="AIzaSyDSh_57xr9CeI2ZuTzHhzda-bRqDZm2N4k")
 
 
-
 def get_gemini_response(input,prompt):
     model=genai.GenerativeModel('gemini-pro')
     response=model.generate_content([input,prompt])
     return response.text
 
 def input_pdf_setup(uploaded_file):
-    if uploaded_file!=None:
-        print(uploaded_file.read())
-        text = ""
-        with uploaded_file:
-            # Create a PDF file reader object
-            pdf_reader = PyPDF2.PdfReader(uploaded_file)
-            
-            # Loop through each page of the PDF
-            for page_num in range(len(pdf_reader.pages)):
-                # Extract text from the current page
-                page = pdf_reader.pages[page_num]
-                text += page.extract_text()
-        print(text)
-        return text
-    else:
-        return "No response Recorded"
+    text = ""
+    for resume in uploaded_file:
+        if resume!=None:
+            print(resume.read())
+            with resume:
+                # Create a PDF file reader object
+                pdf_reader = PyPDF2.PdfReader(resume)
+                
+                # Loop through each page of the PDF
+                for page_num in range(len(pdf_reader.pages)):
+                    # Extract text from the current page
+                    page = pdf_reader.pages[page_num]
+                    text += page.extract_text()
+        else:
+            return "No response Recorded"
+    print(text)
+    return text
 
 ## Streamlit App
 
 input_prompt1 = """
- You are an experienced Technical Human Resource Manager,your task is to review the provided resume against the job description. 
-  Please share your professional evaluation on whether the candidate's profile aligns with the role. 
- Highlight the strengths and weaknesses of the applicant in relation to the specified job requirements job Description is:-:.
+ You are an experienced Technical Human Resource Manager,your task is to review the provided resumes against the job description. 
+  Please share your professional evaluation on whether the candidate's profile aligns with the role('There are multiple resumes plz filter accordingly'). 
+ Highlight the strengths and weaknesses of the applicant ('with the name of applicant  mentioned at the top') in relation to the specified job requirements job Description is:-:.
 """
 
 input_prompt3 = """
-You are an skilled ATS (Applicant Tracking System) scanner with a deep understanding of data science and ATS functionality, 
-your task is to evaluate the resume against the provided job description. give me the percentage of match if the resume matches
-the job description. First the output should come as percentage and then keywords missing and last final thoughts job Description is:-:.
+You are an skilled ATS (Applicant Tracking System) scanner with a deep understanding of data science and ATS functionality, ('There are multiple resumes plz filter accordingly')
+your task is to evaluate the resumes against the provided job description. give me the percentage of match if the resumes matches
+the job description. First the name of applicants then output should come as percentages and then keywords missing and last final thoughts job Description is:-:.
 """
 
 input_prompt2 = """
-You are a highly experienced career consultant with expertise in resume evaluation and job matching. Your task is to provide feedback and improvement tips based on the weaknesses identified in the resume, aligning it with the job description. Please share your professional evaluation and suggestions for improvement. Job improvements is:-:.
+You are a highly experienced career consultant with expertise in resume evaluation and job matching. Your task is to provide feedback and improvement tips based on the weaknesses identified in the resume,
+('note:- There are multiple resumes plz filter accordingly and  all were in  tabular format in which mention rank of resumes and the names of the candidates also percentage matches with the job profiles strength and weakneses')
+ aligning it with the job description. 
+ Please share your professional evaluation and suggestions for improvement. 
+ Job improvements is:-:.
 """
 st.set_page_config(page_title="Garuda ATS Resume EXpert")
 
@@ -59,8 +63,7 @@ current_page = 1
 st.sidebar.image("garudaaihr.png",use_column_width=True)
 st.sidebar.title("Navigation")
 page_selection = st.sidebar.radio("Go to", ("Garuda ATS Tracking System", "Garuda Conversation","UGC Mapping"))
-uploaded_file = st.sidebar.file_uploader("Upload your resume(PDF)...",type=["pdf"])
-
+uploaded_file = st.sidebar.file_uploader("Upload your resume(PDF)...",type=["pdf"], accept_multiple_files=True)
 # Page 1: Garuda ATS Tracking System
 if page_selection == "Garuda ATS Tracking System":
     st.image("garuda.jpg", use_column_width=True)
@@ -84,10 +87,6 @@ if page_selection == "Garuda ATS Tracking System":
             response=get_gemini_response(input_prompt1+input_text,pdf_content)
             st.subheader("The Repsonse is")
             st.write(response)
-            with open("response.txt", "w") as file:
-                file.write(response)
-                a = response
-                download_button = st.download_button("Download Response",a,file_name="HRResponse.txt")
         else:
             st.write("Please upload the resume")
 
@@ -97,10 +96,6 @@ if page_selection == "Garuda ATS Tracking System":
             response=get_gemini_response(input_prompt2+input_text,pdf_content)
             st.subheader("The Repsonse is")
             st.write(response)
-            with open("response.txt", "w") as file:
-                file.write(response)
-                a = response
-                download_button = st.download_button("Download Response",a,file_name="HRResponse.txt")
         else:
             st.write("Please upload the resume")
 
@@ -111,10 +106,6 @@ if page_selection == "Garuda ATS Tracking System":
             response=get_gemini_response(input_prompt3+input_text,pdf_content)
             st.subheader("The Repsonse is")
             st.write(response)
-            with open("response.txt", "w") as file:
-                file.write(response)
-                a = response
-                download_button = st.download_button("Download Response",a,file_name="HRResponse.txt")
         else:
             st.write("Please upload the resume")
 
@@ -123,26 +114,40 @@ elif page_selection == "Garuda Conversation":
     st.image("phonix.jpg", use_column_width=True)
     st.title("Garuda Conversation")
     st.write("Ask your Question from the uploaded Resume ?")
-    ip4 = "Please search "
-    ip6 = "in the mentioned document and do not give any extra information give only those information which is mentioned in content as it is highly confidential information so only relevent information should be given"
     input_prompt4 = st.text_area("")
     submit4 = st.button("Search in Resume")
-    response=""
-    a=""
     if submit4:
         if uploaded_file is not None:
             pdf_content=input_pdf_setup(uploaded_file)
-            response=get_gemini_response(ip4+input_prompt4+ip6,pdf_content)
+            response=get_gemini_response(input_prompt4,pdf_content)
             st.subheader("The Repsonse is")
             st.write(response)
-            with open("response.txt", "w") as file:
-                file.write(response)
-                a = response
-                download_button = st.download_button("Download Response",a,file_name="Response.txt")
-
         else:
             st.write("Please upload the resume")
-    
+    if uploaded_file is not None:
+        st.sidebar.write("PDF Uploaded Successfully")
+
+        # Download button
+        download_button = st.sidebar.button("Download Response")
+
+        if download_button:
+            # Create a PDF file writer object
+            pdf_writer = PyPDF2.PdfWriter()
+
+            # Add the response text to the PDF
+            pdf_writer.add_page()
+            pdf_writer.set_font("Arial", size=12)
+            pdf_writer.cell(0, 10, response, ln=True)
+
+            # Save the PDF file
+            with open("response.pdf", "wb") as f:
+                pdf_writer.write(f)
+
+            # Provide download link
+            st.sidebar.markdown(
+                f'<a href="response.pdf" download>Click here to download the response</a>',
+                unsafe_allow_html=True
+            )
 
 elif  page_selection == "UGC Mapping":
         st.image("groups.jpg", use_column_width=True)
@@ -161,7 +166,7 @@ elif  page_selection == "UGC Mapping":
                     page = ugc_pdf_reader.pages[page_num]
                     ugc_text += page.extract_text()
             
-            input_prompt4 = "You are an best HR Resume checker with aligned job profile can you please give me percentage match of job title with the norms mentioned in the rules and regulation of ugc and job title is and give response in tabular format mentioning percentage match , strengths , weaknesses and missing experience and we are also adding ugc rules and regulation from which you have to match the profile and do not give any thing extra give information only according to the information mentioned in this prompt and also give relevent information for the post metioned  : "
+            input_prompt4 = "You are an best HR Resume checker with aligned job profile can you please give me percentage match of job title with the norms mentioned in the rules and regulation of ugc and job title is and give response in tabular format mentioning percentage match , strengths , weaknesses and missing experience and we are also adding ugc rules and regulation from which you have to match the profile('There are multiple resumes plz filter accordingly') : "
             
             # Generate response using Gemini
             submit6 = st.button("MAP")
@@ -169,10 +174,6 @@ elif  page_selection == "UGC Mapping":
                     response = get_gemini_response(input_prompt4 +input_text + ugc_text, pdf_content)
                     st.subheader("HR Response")
                     st.write(response)
-                    with open("response.txt", "w") as file:
-                        file.write(response)
-                        a = response
-                        download_button = st.download_button("Download Response",a,file_name="HRResponse.txt")
             
 
         else:
