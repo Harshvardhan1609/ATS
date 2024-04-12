@@ -8,6 +8,7 @@ import PyPDF2
 genai.configure(api_key=st.secrets["GOOGLE_API"])
 
 
+
 def get_gemini_response(input,prompt):
     model=genai.GenerativeModel('gemini-pro')
     response=model.generate_content([input,prompt])
@@ -60,8 +61,8 @@ current_page = 1
 
 # Sidebar navigation
 st.sidebar.image("garudaaihr.png",use_column_width=True)
-st.sidebar.title("GRADUDA AI")
-page_selection = st.sidebar.radio("Go to", ("Garuda ATS Tracking System", "Garuda Conversation","UGC Mapping"))
+st.sidebar.title("Navigation")
+page_selection = st.sidebar.radio("Go to", ("Garuda ATS Tracking System", "Garuda Conversation","UGC Mapping","Generate Questions(Garud GenZ)"))
 uploaded_file = st.sidebar.file_uploader("Upload your resume(PDF)...",type=["pdf"], accept_multiple_files=True)
 # Page 1: Garuda ATS Tracking System
 if page_selection == "Garuda ATS Tracking System":
@@ -86,10 +87,6 @@ if page_selection == "Garuda ATS Tracking System":
             response=get_gemini_response(input_prompt1+input_text,pdf_content)
             st.subheader("The Repsonse is")
             st.write(response)
-            with open("response.txt", "w") as file:
-                file.write(response)
-                a = response
-                download_button = st.download_button("Download Response",a,file_name="HRResponse.txt")
         else:
             st.write("Please upload the resume")
 
@@ -99,10 +96,6 @@ if page_selection == "Garuda ATS Tracking System":
             response=get_gemini_response(input_prompt2+input_text,pdf_content)
             st.subheader("The Repsonse is")
             st.write(response)
-            with open("response.txt", "w") as file:
-                file.write(response)
-                a = response
-                download_button = st.download_button("Download Response",a,file_name="HRResponse.txt")
         else:
             st.write("Please upload the resume")
 
@@ -113,10 +106,6 @@ if page_selection == "Garuda ATS Tracking System":
             response=get_gemini_response(input_prompt3+input_text,pdf_content)
             st.subheader("The Repsonse is")
             st.write(response)
-            with open("response.txt", "w") as file:
-                file.write(response)
-                a = response
-                download_button = st.download_button("Download Response",a,file_name="HRResponse.txt")
         else:
             st.write("Please upload the resume")
 
@@ -133,12 +122,32 @@ elif page_selection == "Garuda Conversation":
             response=get_gemini_response(input_prompt4,pdf_content)
             st.subheader("The Repsonse is")
             st.write(response)
-            with open("response.txt", "w") as file:
-                file.write(response)
-                a = response
-                download_button = st.download_button("Download Response",a,file_name="HRResponse.txt")
         else:
             st.write("Please upload the resume")
+    if uploaded_file is not None:
+        st.sidebar.write("PDF Uploaded Successfully")
+
+        # Download button
+        download_button = st.sidebar.button("Download Response")
+
+        if download_button:
+            # Create a PDF file writer object
+            pdf_writer = PyPDF2.PdfWriter()
+
+            # Add the response text to the PDF
+            pdf_writer.add_page()
+            pdf_writer.set_font("Arial", size=12)
+            pdf_writer.cell(0, 10, response, ln=True)
+
+            # Save the PDF file
+            with open("response.pdf", "wb") as f:
+                pdf_writer.write(f)
+
+            # Provide download link
+            st.sidebar.markdown(
+                f'<a href="response.pdf" download>Click here to download the response</a>',
+                unsafe_allow_html=True
+            )
 
 elif  page_selection == "UGC Mapping":
         st.image("groups.jpg", use_column_width=True)
@@ -165,17 +174,37 @@ elif  page_selection == "UGC Mapping":
                     response = get_gemini_response(input_prompt4 +input_text + ugc_text, pdf_content)
                     st.subheader("HR Response")
                     st.write(response)
-                    with open("response.txt", "w") as file:
-                        file.write(response)
-                        a = response
-                        download_button = st.download_button("Download Response",a,file_name="HRResponse.txt")
             
 
         else:
             st.write("Please upload the resume")
 
-if uploaded_file is None:
-    st.sidebar.write("Please upload Resume")
+elif page_selection=="Generate Questions(Garud GenZ)":
+
+    st.image("interview.jpg", use_column_width=True)
+    st.title("Enter the job role and find Interview Questions about it")
+    input_job=st.text_area("Job profile:-:" ,key="input")
+    hardness=st.radio("Difficulty Level:-:",("Low","Medium","Hard"))
+    gen_bt=st.button("Generate")
+    if gen_bt==True:
+        if hardness=="Low":
+            prompts=f"""According to the job role:-{input_job} Generate interview question which we can ask to the applicant with answers
+            """
+            res_gemini=get_gemini_response(input=prompts,prompt=f"Hardness of the questions will be:-:{hardness}")
+            st.write(res_gemini)
+        if hardness=="Medium":
+            prompts=f"""According to the job role:-{input_job} Generate interview question which we can ask to the applicant with an overview and in a broad way plz check how the applicant
+            would perform in real world 
+            """
+            res_gemini=get_gemini_response(input=prompts,prompt=f"Hardness of the questions will be:-:{hardness}")
+            st.write(res_gemini)
+        if hardness=="Hard":
+            prompts=f"""According to the job role:-{input_job} Generate interview question which we can ask to the applicant make sure to 
+            check the analytical knowledge and deep dive into the domain also included some cutting edge techniques of the interviewer also mention answers for that questions
+            """
+            res_gemini=get_gemini_response(input=prompts,prompt=f"Hardness of the questions will be:-:{hardness}")
+            st.write(res_gemini)
 
 
-
+if uploaded_file is not None:
+    st.sidebar.write("PDF Uploaded Successfully")
