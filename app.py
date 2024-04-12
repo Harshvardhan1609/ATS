@@ -143,9 +143,6 @@ elif page_selection == "Garuda Conversation":
         else:
             st.write("Please upload the resume")
     
-    if uploaded_file is not None:
-        st.sidebar.write("PDF Uploaded Successfully")
-        # Download button
 
 elif  page_selection == "UGC Mapping":
         st.image("groups.jpg", use_column_width=True)
