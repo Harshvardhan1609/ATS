@@ -5,8 +5,8 @@ import streamlit as st
 import google.generativeai as genai
 import PyPDF2
 
-# genai.configure(api_key=st.secrets["GOOGLE_API"])
-genai.configure(api_key="AIzaSyDSh_57xr9CeI2ZuTzHhzda-bRqDZm2N4k")
+genai.configure(api_key=st.secrets["GOOGLE_API"])
+
 
 
 def get_gemini_response(input,prompt):
@@ -55,6 +55,7 @@ st.set_page_config(page_title="Garuda ATS Resume EXpert")
 current_page = 1
 
 # Sidebar navigation
+st.sidebar.image("garudaaihr.png",use_column_width=True)
 st.sidebar.title("Navigation")
 page_selection = st.sidebar.radio("Go to", ("Garuda ATS Tracking System", "Garuda Conversation","UGC Mapping"))
 uploaded_file = st.sidebar.file_uploader("Upload your resume(PDF)...",type=["pdf"])
@@ -106,7 +107,7 @@ if page_selection == "Garuda ATS Tracking System":
 
 # Page 2: Garuda Conversation
 elif page_selection == "Garuda Conversation":
-    st.image("garuda.jpg", use_column_width=True)
+    st.image("phonix.jpg", use_column_width=True)
     st.title("Garuda Conversation")
     st.write("Ask your Question from the uploaded Resume ?")
     input_prompt4 = st.text_area("")
@@ -145,7 +146,7 @@ elif page_selection == "Garuda Conversation":
             )
 
 elif  page_selection == "UGC Mapping":
-        st.image("garuda.jpg", use_column_width=True)
+        st.image("groups.jpg", use_column_width=True)
         st.title("NORMS Matching System")
         input_text = st.text_area("Job Title: ", key="input")
         
