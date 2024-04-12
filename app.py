@@ -5,8 +5,8 @@ import streamlit as st
 import google.generativeai as genai
 import PyPDF2
 
-genai.configure(api_key=st.secrets["GOOGLE_API"])
-# genai.configure(api_key="AIzaSyDSh_57xr9CeI2ZuTzHhzda-bRqDZm2N4k")
+# genai.configure(api_key=st.secrets["GOOGLE_API"])
+genai.configure(api_key="AIzaSyDSh_57xr9CeI2ZuTzHhzda-bRqDZm2N4k")
 
 
 def get_gemini_response(input,prompt):
@@ -164,10 +164,13 @@ elif  page_selection == "UGC Mapping":
             input_prompt4 = "You are an best HR Resume checker with aligned job profile can you please give me percentage match of job title with the norms mentioned in the rules and regulation of ugc and job title is and give response in tabular format mentioning percentage match , strengths , weaknesses and missing experience and we are also adding ugc rules and regulation from which you have to match the profile : "
             
             # Generate response using Gemini
-            response = get_gemini_response(input_prompt4 +input_text + ugc_text, pdf_content)
-            st.subheader("HR Response")
-            st.write(response)
+            submit6 = st.button("MAP")
+            if submit6:
+                    response = get_gemini_response(input_prompt4 +input_text + ugc_text, pdf_content)
+                    st.subheader("HR Response")
+                    st.write(response)
             
+
         else:
             st.write("Please upload the resume")
 
