@@ -110,12 +110,14 @@ elif page_selection == "Garuda Conversation":
     st.image("phonix.jpg", use_column_width=True)
     st.title("Garuda Conversation")
     st.write("Ask your Question from the uploaded Resume ?")
+    ip4 = "Please search "
+    ip6 = "in the mentioned document and do not give any extra information give only those information which is mentioned in content as it is highly confidential information so only relevent information should be given"
     input_prompt4 = st.text_area("")
     submit4 = st.button("Search in Resume")
     if submit4:
         if uploaded_file is not None:
             pdf_content=input_pdf_setup(uploaded_file)
-            response=get_gemini_response(input_prompt4,pdf_content)
+            response=get_gemini_response(ip4+input_prompt4+ip6,pdf_content)
             st.subheader("The Repsonse is")
             st.write(response)
         else:
