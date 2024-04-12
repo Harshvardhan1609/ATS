@@ -60,7 +60,7 @@ current_page = 1
 
 # Sidebar navigation
 st.sidebar.image("garudaaihr.png",use_column_width=True)
-st.sidebar.title("Navigation")
+st.sidebar.title("GRADUDA AI")
 page_selection = st.sidebar.radio("Go to", ("Garuda ATS Tracking System", "Garuda Conversation","UGC Mapping"))
 uploaded_file = st.sidebar.file_uploader("Upload your resume(PDF)...",type=["pdf"], accept_multiple_files=True)
 # Page 1: Garuda ATS Tracking System
