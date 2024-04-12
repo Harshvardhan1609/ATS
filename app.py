@@ -87,6 +87,10 @@ if page_selection == "Garuda ATS Tracking System":
             response=get_gemini_response(input_prompt1+input_text,pdf_content)
             st.subheader("The Repsonse is")
             st.write(response)
+            with open("response.txt", "w") as file:
+                file.write(response)
+                a = response
+                download_button = st.download_button("Download Response",a,file_name="HRResponse.txt")
         else:
             st.write("Please upload the resume")
 
@@ -96,6 +100,10 @@ if page_selection == "Garuda ATS Tracking System":
             response=get_gemini_response(input_prompt2+input_text,pdf_content)
             st.subheader("The Repsonse is")
             st.write(response)
+            with open("response.txt", "w") as file:
+                file.write(response)
+                a = response
+                download_button = st.download_button("Download Response",a,file_name="HRResponse.txt")
         else:
             st.write("Please upload the resume")
 
@@ -106,6 +114,10 @@ if page_selection == "Garuda ATS Tracking System":
             response=get_gemini_response(input_prompt3+input_text,pdf_content)
             st.subheader("The Repsonse is")
             st.write(response)
+            with open("response.txt", "w") as file:
+                file.write(response)
+                a = response
+                download_button = st.download_button("Download Response",a,file_name="HRResponse.txt")
         else:
             st.write("Please upload the resume")
 
@@ -122,32 +134,14 @@ elif page_selection == "Garuda Conversation":
             response=get_gemini_response(input_prompt4,pdf_content)
             st.subheader("The Repsonse is")
             st.write(response)
+            with open("response.txt", "w") as file:
+                file.write(response)
+                a = response
+                download_button = st.download_button("Download Response",a,file_name="HRResponse.txt")
         else:
             st.write("Please upload the resume")
     if uploaded_file is not None:
         st.sidebar.write("PDF Uploaded Successfully")
-
-        # Download button
-        download_button = st.sidebar.button("Download Response")
-
-        if download_button:
-            # Create a PDF file writer object
-            pdf_writer = PyPDF2.PdfWriter()
-
-            # Add the response text to the PDF
-            pdf_writer.add_page()
-            pdf_writer.set_font("Arial", size=12)
-            pdf_writer.cell(0, 10, response, ln=True)
-
-            # Save the PDF file
-            with open("response.pdf", "wb") as f:
-                pdf_writer.write(f)
-
-            # Provide download link
-            st.sidebar.markdown(
-                f'<a href="response.pdf" download>Click here to download the response</a>',
-                unsafe_allow_html=True
-            )
 
 elif  page_selection == "UGC Mapping":
         st.image("groups.jpg", use_column_width=True)
@@ -174,6 +168,10 @@ elif  page_selection == "UGC Mapping":
                     response = get_gemini_response(input_prompt4 +input_text + ugc_text, pdf_content)
                     st.subheader("HR Response")
                     st.write(response)
+                    with open("response.txt", "w") as file:
+                        file.write(response)
+                        a = response
+                        download_button = st.download_button("Download Response",a,file_name="HRResponse.txt")
             
 
         else:
