@@ -8,8 +8,7 @@ import pickle
 from pathlib import Path
 import streamlit_authenticator as stauth
 
-genai.configure(api_key="AIzaSyDSh_57xr9CeI2ZuTzHhzda-bRqDZm2N4k")
-# genai.configure(api_key=st.secrets["GOOGLE_API"])
+genai.configure(api_key=st.secrets["GOOGLE_API"])
 
 
 def get_gemini_response(input,prompt):
@@ -58,7 +57,6 @@ You are a highly experienced career consultant with expertise in resume evaluati
  Job improvements is:-:.
 """
 st.set_page_config(page_title="Garuda ATS Resume EXpert",page_icon="favicon.jpg")
-
 # USER AUTHENTICATION
 names = ["Vinod Purohit","Kalki","Prateek"]
 usernames = ["vinodpurohit","kalki","prateek"]
