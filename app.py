@@ -104,7 +104,7 @@ if authentication_status :
 
     # Sidebar navigation
     st.sidebar.image("garudaaihr.png",use_column_width=True)
-    st.sidebar.title("GRADUDA AI")
+    st.sidebar.title("GARUDA AI")
     st.sidebar.subheader(f"Welcome {name}")
     page_selection = st.sidebar.radio("Go to", ("Garuda ATS Tracking System", "Garuda Conversation","UGC Mapping","Generate Questions(Garud GenZ)"))
     uploaded_file = st.sidebar.file_uploader("Upload your resume(PDF)...",type=["pdf"], accept_multiple_files=True)
