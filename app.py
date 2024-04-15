@@ -57,7 +57,7 @@ You are a highly experienced career consultant with expertise in resume evaluati
  Please share your professional evaluation and suggestions for improvement. 
  Job improvements is:-:.
 """
-st.set_page_config(page_title="Garuda ATS Resume EXpert")
+st.set_page_config(page_title="Garuda ATS Resume EXpert",page_icon="favicon.jpg")
 
 # USER AUTHENTICATION
 names = ["Vinod Purohit","Kalki","Prateek"]
